@@ -33,7 +33,7 @@ public class ClientMain {
 
             String message, response;
 
-            do {
+            while (true){
                 System.out.print("Enter message ('QUIT' to exit): ");
                 message = userEntry.nextLine();
 
@@ -45,7 +45,7 @@ public class ClientMain {
 
                 //Display servers response to user
                 System.out.println("\nSERVER> " + response);
-            } while (!message.equals("QUIT"));
+            }
         } catch (IOException ioEx){
             ioEx.printStackTrace();
         }
