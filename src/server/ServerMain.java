@@ -8,7 +8,7 @@ public class ServerMain {
     private static ServerSocket serverSocket;
     private static final int port = 1234;
 
-    private static List<Client> activeClients = new ArrayList<>();
+    public static List<Client> activeClients = new ArrayList<>();
 
     private static Scanner input;
     private static PrintWriter output;
@@ -50,7 +50,10 @@ public class ServerMain {
                     // Create a thread to handle communication with this client and pass the constructor
                     // for this thread reference to the relevant socket..
                     Client client = new Client(clientSocket, clientRequest[1]);
+                    activeClients.add(client);
                     client.start();
+
+                    System.out.println(activeClients.size());
                     // Send is connected message
                     output.println(generateOkResponse());
                 } else {

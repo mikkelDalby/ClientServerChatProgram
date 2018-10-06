@@ -16,19 +16,19 @@ public class Client extends Thread {
         System.out.println("client thread running on server for user: " + username);
     }
 
-    public void resetAliveTime(){
+    public synchronized void resetAliveTime(){
         this.aliveTime = 0;
     }
 
-    public void addSecondToAliveTime(){
+    public synchronized void addSecondToAliveTime(){
         this.aliveTime++;
     }
 
-    public int getAliveTime(){
+    public synchronized int getAliveTime(){
         return aliveTime;
     }
 
-    public String getUsername(){
+    public synchronized String getUsername(){
         return username;
     }
 }
