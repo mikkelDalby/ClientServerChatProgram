@@ -1,5 +1,7 @@
 package client;
 
+import server.Client;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -8,10 +10,13 @@ public class ClientMain {
     private static InetAddress host;
     private static int port;
 
-    private static boolean isConnected = false;
+    public static boolean isConnected = false;
 
     //Set up stream for keyboard entry
     private static Scanner userEntry = new Scanner(System.in);
+
+    private static ClientListener listener;
+    private static ImAlive imAlive;
 
     public static void main(String[] args) {
         connectToServer();
@@ -38,7 +43,7 @@ public class ClientMain {
                 if (response.equals("J_OK")){
                     isConnected = true;
                 } else {
-                    System.out.println("Server did'nt respond try again");
+                    System.out.println(response);
                 }
 
             } catch (UnknownHostException uhEx) {
@@ -49,7 +54,8 @@ public class ClientMain {
                 System.out.println("Message not valid");
             }
         } while (!isConnected);
-            sendMessages(socket);
+
+        sendMessages(socket);
     }
 
     private static String[] splitInputString(String input){
@@ -66,29 +72,28 @@ public class ClientMain {
 
     private static void sendMessages(Socket socket){
         try {
-            Scanner networkInput = new Scanner(socket.getInputStream());
             PrintWriter networkOutput = new PrintWriter(socket.getOutputStream(), true);
 
-            String message, response;
+            String message;
+            listener = new ClientListener(socket);
+            listener.start();
 
-            while (true){
+            imAlive = new ImAlive(socket);
+            imAlive.start();
+
+            while (isConnected){
                 System.out.print("Enter message ('QUIT' to exit): ");
                 message = userEntry.nextLine();
 
-                // Send message to server on the socket's output stream
-                //Accept response from server on the socket's input stream
                 networkOutput.println(message);
 
-                response = networkInput.nextLine();
-
-                //Display servers response to user
-                System.out.println("\nSERVER> " + response);
+                Thread.sleep(1);
             }
         } catch (IOException ioEx){
             ioEx.printStackTrace();
-        }
-
-        finally {
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
             try {
                 System.out.println("\nClosing connection");
                 socket.close();
@@ -97,5 +102,6 @@ public class ClientMain {
                 System.exit(1);
             }
         }
+        connectToServer();
     }
 }

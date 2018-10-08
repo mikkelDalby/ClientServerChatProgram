@@ -14,10 +14,13 @@ public class ServerMain {
     private static PrintWriter output;
 
     private static AdminClients adminClients = new AdminClients(activeClients);
+    private static SendUsernamesThread sendUsernames;
 
     public static void main(String[] args) throws IOException{
         try{
             serverSocket = new ServerSocket(port);
+            sendUsernames = new SendUsernamesThread(activeClients);
+            sendUsernames.start();
         } catch (IOException ioEx){
             System.out.println("\nUnable to setup port!");
             System.exit(1);
@@ -34,7 +37,7 @@ public class ServerMain {
 
             String[] clientRequest = splitInputString(input.nextLine());
 
-            if (clientRequest.length == 4){
+            if (clientRequest.length == 4 && clientRequest[0].equals("JOIN")){
                 boolean isUsed = false;
 
                 // Check if username is already taken
@@ -46,16 +49,15 @@ public class ServerMain {
 
                 // If username is free
                 if (!isUsed){
-                    System.out.println("\nNew client accepted. \n");
                     // Create a thread to handle communication with this client and pass the constructor
                     // for this thread reference to the relevant socket..
-                    Client client = new Client(clientSocket, clientRequest[1]);
+                    Client client = new Client(clientSocket, clientRequest[1], activeClients);
                     activeClients.add(client);
-                    client.start();
-
-                    System.out.println(activeClients.size());
                     // Send is connected message
                     output.println(generateOkResponse());
+                    System.out.println("New client accepted: " + client.getUsername());
+                    client.start();
+
                 } else {
                     output.println(generateErrorMessage(2, "Username already in use"));
                 }

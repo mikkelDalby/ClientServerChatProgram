@@ -1,10 +1,11 @@
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+	    // write your code here
         String string = "JOIN mikkel, 127.0.0.1:1234";
         String[] array = splitInputString(string);
 
+        System.out.println(string);
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
