@@ -88,6 +88,7 @@ public class Client extends Thread {
                     output.println("QUIT");
                     for (Client i: activeClients){
                         if (i.getUsername().equals(getUsername())){
+                            System.out.println("Client has quit: " + i.getUsername());
                             activeClients.remove(i);
                             break;
                         }

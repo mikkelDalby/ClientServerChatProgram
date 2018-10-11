@@ -1,7 +1,5 @@
 package client;
 
-import server.Client;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -27,7 +25,7 @@ public class ClientMain {
         Scanner networkInput;
         PrintWriter networkOutput;
         do {
-                System.out.println("Connect to server: JOIN <<username>>, <<serverIp>>:<<serverPort>>");
+                System.out.println("JOIN <<username>>, <<serverIp>>:<<serverPort>> \nConnect to server: ");
                 String message = userEntry.nextLine();
                 String[] parameters = splitInputString(message);
 
@@ -43,7 +41,12 @@ public class ClientMain {
                 if (response.equals("J_OK")){
                     isConnected = true;
                 } else {
-                    System.out.println(response);
+                    String[] splittedResponse = splitInputString(response);
+                    System.out.print("Error: ");
+                    for (int i = 1; i < splittedResponse.length; i++) {
+                        System.out.print(splittedResponse[i] + " ");
+                    }
+                    System.out.println();
                 }
 
             } catch (UnknownHostException uhEx) {
@@ -82,10 +85,16 @@ public class ClientMain {
             imAlive.start();
 
             while (isConnected){
-                System.out.print("Enter message ('QUIT' to exit): ");
+                System.out.println("Enter message: ");
                 message = userEntry.nextLine();
 
-                networkOutput.println(message);
+                if (message.equals("HELP")){
+                    System.out.println("\nMSG <<username>>:<<message>> - Sends message to specific user");
+                    System.out.println("MSG-ALL <<message>> - Sends message to all active users");
+                    System.out.println("QUIT - Close connection to server\n");
+                } else {
+                    networkOutput.println(message);
+                }
 
                 Thread.sleep(1);
             }

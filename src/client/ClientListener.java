@@ -24,11 +24,16 @@ public class ClientListener extends Thread {
                 if (splittedResponse.length > 0) {
                     switch (splittedResponse[0]) {
                         case "LIST":
-                            System.out.println("\n\nAll active users");
-                            for (int i = 1; i < splittedResponse.length; i++) {
-                                System.out.println(splittedResponse[i]);
+                            if (splittedResponse.length == 1) {
+                                System.out.println("\nNo active users");
+                            } else {
+                                System.out.println("\nAll active users");
+                                for (int i = 1; i < splittedResponse.length; i++) {
+                                    System.out.println(splittedResponse[i]);
+                                }
                             }
-                            System.out.println();
+                                System.out.println();
+                                System.out.println("Enter message: ");
                             break;
                         case "DATA":
                             System.out.println();
@@ -37,8 +42,10 @@ public class ClientListener extends Thread {
                                 System.out.print(splittedResponse[i] + " ");
                             }
                             System.out.println();
+                            System.out.println("Enter message: ");
                             break;
                         case "J_ER":
+                            System.out.print("Error: ");
                             for (int i = 1; i < splittedResponse.length; i++) {
                                 System.out.print(splittedResponse[i] + " ");
                             }

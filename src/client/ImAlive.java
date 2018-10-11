@@ -15,14 +15,14 @@ public class ImAlive extends Thread {
     }
 
     public void run() {
-        PrintWriter networkOutput;
+        try {
+            networkOutput = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         while (isAlive){
-            try {
-                networkOutput = new PrintWriter(socket.getOutputStream(), true);
-                networkOutput.println("IMAV");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            networkOutput.println("IMAV");
             try {
                 Thread.sleep(60000);
             } catch (InterruptedException e) {

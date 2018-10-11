@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-import static server.ServerMain.activeClients;
-
 public class SendUsernamesThread extends Thread {
 
     private PrintWriter output;
@@ -20,12 +18,18 @@ public class SendUsernamesThread extends Thread {
         while (true){
             if (activeClients.size() != tempSize) {
                 tempSize = activeClients.size();
-                broadcastListOfActiveUsers();
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+                if (activeClients.size() == 1) {
+                    for (Client i: activeClients) {
+                        try {
+                            output = new PrintWriter(i.getClientSocket().getOutputStream(), true);
+                            output.println("LIST");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    broadcastListOfActiveUsers();
+                }
             }
             try {
                 Thread.sleep(1);
