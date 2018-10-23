@@ -57,6 +57,7 @@ public class ClientListener extends Thread {
                             break;
                         default:
                             System.out.println(splittedResponse[0]);
+                            System.out.println(splittedResponse.length);
                             System.out.println("Response not recognized");
                     }
                 }

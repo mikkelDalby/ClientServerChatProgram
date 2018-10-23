@@ -39,13 +39,13 @@ public class Client extends Thread {
                 case "IMAV":
                     resetAliveTime();
                     break;
-                case "MSG-ALL":
+                case "DATA":
                     for (Client i: activeClients){
                         if (i.getClientSocket() != getClientSocket()) {
                             try {
                                 PrintWriter send = new PrintWriter(i.getClientSocket().getOutputStream(), true);
                                 String string = "DATA " + getUsername() + ": ";
-                                for (int j = 1; j < splittedResponse.length; j++) {
+                                for (int j = 2; j < splittedResponse.length; j++) {
                                     string += splittedResponse[j] + " ";
                                 }
                                 send.println(string);

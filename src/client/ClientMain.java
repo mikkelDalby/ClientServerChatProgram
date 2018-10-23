@@ -40,6 +40,7 @@ public class ClientMain {
 
                 if (response.equals("J_OK")){
                     isConnected = true;
+                    System.out.println("Connected to server");
                 } else {
                     String[] splittedResponse = splitInputString(response);
                     System.out.print("Error: ");
@@ -85,12 +86,11 @@ public class ClientMain {
             imAlive.start();
 
             while (isConnected){
-                System.out.println("Enter message: ");
                 message = userEntry.nextLine();
 
                 if (message.equals("HELP")){
-                    System.out.println("\nMSG <<username>>:<<message>> - Sends message to specific user");
-                    System.out.println("MSG-ALL <<message>> - Sends message to all active users");
+                    System.out.println("\nDATA <<your_username>>:<<message>> - Sends message to all active users");
+                    System.out.println("MSG <<username>>: <<message>> - Sends message to user with provided username");
                     System.out.println("QUIT - Close connection to server\n");
                 } else {
                     networkOutput.println(message);
