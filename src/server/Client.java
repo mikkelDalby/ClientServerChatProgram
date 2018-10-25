@@ -84,6 +84,12 @@ public class Client extends Thread {
                         }
                     }
                     break;
+                case "HELP":
+                    String line = "HELP ;DATA <<your_username>>:<<message>> - Sends message to all active users " +
+                            ";MSG <<username>>: <<message>> - Sends message to user with provided username" +
+                            ";QUIT - Close connection to server";
+                    output.println(line);
+                    break;
                 case "QUIT":
                     output.println("QUIT");
                     for (Client i: activeClients){

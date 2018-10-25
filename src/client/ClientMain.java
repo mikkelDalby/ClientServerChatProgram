@@ -88,13 +88,7 @@ public class ClientMain {
             while (isConnected){
                 message = userEntry.nextLine();
 
-                if (message.equals("HELP")){
-                    System.out.println("\nDATA <<your_username>>:<<message>> - Sends message to all active users");
-                    System.out.println("MSG <<username>>: <<message>> - Sends message to user with provided username");
-                    System.out.println("QUIT - Close connection to server\n");
-                } else {
-                    networkOutput.println(message);
-                }
+                networkOutput.println(message);
 
                 Thread.sleep(1);
             }

@@ -51,13 +51,21 @@ public class ClientListener extends Thread {
                             }
                             System.out.println();
                             break;
+                        case "HELP":
+                            System.out.println();
+                            String[] split = response.split(";");
+                            for (int i = 0; i < split.length; i++) {
+                                System.out.println(split[i]);
+                            }
+                            System.out.println();
+                            System.out.println("Enter message: ");
+                            break;
                         case "QUIT":
                             isOnline = false;
                             ClientMain.isConnected = false;
                             break;
                         default:
-                            System.out.println(splittedResponse[0]);
-                            System.out.println(splittedResponse.length);
+
                             System.out.println("Response not recognized");
                     }
                 }
