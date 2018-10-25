@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+// Check if changes in the active cilents list. If changes occur broadcast list of usernames to all active users.
 public class SendUsernamesThread extends Thread {
 
     private PrintWriter output;

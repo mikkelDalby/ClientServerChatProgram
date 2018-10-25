@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.List;
 import java.util.Scanner;
 
+// Each client get their own thread listening for input and reply.
 public class Client extends Thread {
     private volatile Socket client;
     private volatile String username;

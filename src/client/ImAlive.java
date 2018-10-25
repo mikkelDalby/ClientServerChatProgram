@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+// Sends a heartbeat to the server once every 60 seconds
 public class ImAlive extends Thread {
 
     private Socket socket;

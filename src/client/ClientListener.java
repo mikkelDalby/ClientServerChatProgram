@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;
 
+// Listens for response from the server
 public class ClientListener extends Thread {
     private Socket socket;
 
