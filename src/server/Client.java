@@ -11,6 +11,8 @@ public class Client extends Thread {
     private volatile Socket client;
     private volatile String username;
     private volatile int aliveTime = 0;
+    private String clientIp;
+    private int clientPort;
 
     private List<Client> activeClients;
 
@@ -30,6 +32,8 @@ public class Client extends Thread {
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
+        this.clientIp = client.getInetAddress().toString();
+        this.clientPort = client.getPort();
     }
 
     public void run(){

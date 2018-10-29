@@ -4,9 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+// Makes the client able to join the server and is responsible for sending messages.
 public class ClientMain {
     private static InetAddress host;
-    private static int port;
 
     public static boolean isConnected = false;
 
