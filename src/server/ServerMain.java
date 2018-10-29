@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+// The server runs on port 1234
 // Waits for new clients to join the server and adds them to the activeClients list
 public class ServerMain {
     private static ServerSocket serverSocket;
